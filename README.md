@@ -1,10 +1,11 @@
-# 🚀 End-to-End Data Pipeline using Databricks Delta Live Tables (DLT)
+# 🚀 End-to-End Data Pipeline using Delta Live Tables (DLT)
 
 ## 📌 Overview
 
-This project implements a production-style **end-to-end data pipeline** using **Delta Live Tables (DLT)** on Databricks, following the **Medallion Architecture (Bronze → Silver → Gold)**.
+This project demonstrates a production-style **end-to-end data pipeline** built using **Delta Live Tables (DLT)** on Databricks.
+It follows the **Medallion Architecture (Bronze → Silver → Gold)** to transform raw data into high-quality, analytics-ready datasets.
 
-The pipeline ingests raw data, applies transformations and data quality rules, and produces analytics-ready datasets with built-in lineage and monitoring.
+The pipeline leverages **streaming ingestion, data quality enforcement, and automated lineage tracking** to simulate real-world data engineering workflows.
 
 ---
 
@@ -14,21 +15,22 @@ The pipeline ingests raw data, applies transformations and data quality rules, a
 Raw Data → Bronze (Ingestion) → Silver (Transformation) → Gold (Aggregation)
 ```
 
-* **Bronze Layer**
+### 🔹 Bronze Layer
 
-  * Ingests raw data using Auto Loader (cloudFiles)
-  * Supports incremental and streaming ingestion
+* Ingests raw data using Auto Loader (`cloudFiles`)
+* Supports incremental and streaming ingestion
+* Stores raw, unprocessed data for traceability
 
-* **Silver Layer**
+### 🔹 Silver Layer
 
-  * Cleans and standardizes data
-  * Applies data quality constraints
-  * Removes invalid/null records
+* Cleans and standardizes data
+* Applies data quality validations
+* Filters invalid or null records
 
-* **Gold Layer**
+### 🔹 Gold Layer
 
-  * Performs aggregations and business-level transformations
-  * Produces curated datasets for reporting and analytics
+* Performs aggregations and business transformations
+* Produces curated datasets for analytics and reporting
 
 ---
 
@@ -62,58 +64,56 @@ DLT_END_TO_END/
 
 ---
 
-## ⚙️ Pipeline Implementation Details
+## ⚙️ Pipeline Implementation
 
-* Built using **DLT decorators** (`@dlt.table`, `dlt.read`, `dlt.read_stream`)
-* Implements **streaming ingestion with Auto Loader**
-* Uses **data quality expectations** to enforce constraints
-* Automatically manages **data lineage and dependencies**
+* Built using DLT decorators (`@dlt.table`)
+* Uses `dlt.read()` and `dlt.read_stream()` for dependency management
+* Implements **Auto Loader** for scalable ingestion
 * Handles **schema evolution and incremental processing**
+* Automatically generates **data lineage and DAG execution plan**
 
 ---
 
 ## ✅ Data Quality & Governance
 
-* Enforced data validation using **DLT expectations**
-* Ensured non-null constraints and schema consistency
-* Prevented bad data propagation across layers
+* Enforced validation rules using **DLT expectations (`@dlt.expect`)**
+* Ensured schema consistency across layers
+* Prevented propagation of bad or incomplete data
 
 ---
 
 ## 🔄 Slowly Changing Dimensions (SCD Type 2)
 
-Implemented SCD Type 2 logic using DLT:
-
-* Tracks historical changes in dimension data
-* Maintains **current and historical records**
-* Uses `apply_changes()` for CDC-style updates
+* Implemented using `apply_changes()`
+* Maintains historical records of changes
+* Supports CDC-style updates for dimension tables
 
 ---
 
 ## 🧠 Key Learnings
 
 * DLT pipelines are **stateful systems** — pipeline storage and checkpoints must be managed carefully
-* Schema issues (invalid column names, evolution) can break pipelines if not handled early
-* Data quality rules should be enforced at ingestion, not after failure
-* Understanding **DLT execution model vs notebook execution** is critical
+* Schema issues (e.g., invalid column names) can break pipelines if not handled early
+* Data quality should be enforced during ingestion, not after failure
+* Understanding the **DLT execution model vs standard notebooks** is critical
 
 ---
 
 ## ▶️ How to Run
 
 1. Create a Delta Live Tables pipeline in Databricks
-2. Attach the notebooks from this repository
-3. Configure pipeline storage location
-4. Run the pipeline in Development or Production mode
+2. Add notebooks from this repository to the pipeline
+3. Configure pipeline storage location (e.g., `/tmp/dlt_pipeline`)
+4. Run the pipeline in **Development** or **Production** mode
 
 ---
 
 ## 📌 Future Enhancements
 
-* Add parameterized pipeline configurations
-* Integrate monitoring and alerting (DLT event logs)
+* Parameterize pipeline configuration for reusability
+* Add monitoring and alerting using DLT event logs
 * Implement unit testing for transformations
-* Optimize performance for large-scale datasets
+* Optimize performance for large-scale data
 
 ---
 
@@ -129,4 +129,4 @@ Akash Kolthe
 
 ---
 
-## ⭐ If this project helped you, consider giving it a star!
+## ⭐ If you found this project useful, consider giving it a star!
