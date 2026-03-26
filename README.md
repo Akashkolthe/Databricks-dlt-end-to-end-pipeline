@@ -1,3 +1,5 @@
+
+![Architecture](docs/architecture.png)
 # 🚀 End-to-End Data Pipeline using Delta Live Tables (DLT)
 
 ## 📌 Overview
